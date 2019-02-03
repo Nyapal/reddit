@@ -16,16 +16,17 @@ require('./controllers/posts.js')(app);
 require('./data/reddit-db');
 
 app.get('/', function (req, res) {
-    res.render('home');
+    res.render('posts-index');
 });
 
 app.get('/posts/new', function (req, res) {
-    res.render('post-new')
+    res.render('posts-new')
 })
 
-app.get('/index', function (req, res) {
-    res.render('post-index')
-})
+// app.get('/index', function (req, res) {
+//     res.render('post-index')
+// })
+
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
-module.exports = app;
+//module.exports = app;
