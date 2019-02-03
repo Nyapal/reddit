@@ -13,7 +13,7 @@ module.exports = app => {
         })
     });
     //INDEX
-    app.get('/index', (req, res) => {
+    app.get('/', (req, res) => {
         Post.find({})
             .then(posts => {
             res.render("posts-index", { posts });

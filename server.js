@@ -27,3 +27,5 @@ app.get('/index', function (req, res) {
     res.render('post-index')
 })
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+
+module.exports = app;
