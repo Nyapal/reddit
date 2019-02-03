@@ -16,10 +16,25 @@ module.exports = app => {
     app.get('/index', (req, res) => {
         Post.find({})
             .then(posts => {
-            res.render("post-index", { posts });
+            res.render("posts-index", { posts });
         })
             .catch(err => {
             console.log(err.message);
         });
     })
+    // BY ID OR WHATEVER
+    app.get("/posts/:id", function(req, res) {
+        // LOOK UP THE POST
+        Post.findById(req.params.id)
+          .then(post => {
+            res.render("posts-show", { post });
+          })
+          .catch(err => {
+            console.log(err.message);
+          });
+      });
+
+
+
+
   };
