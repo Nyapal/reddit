@@ -12,4 +12,14 @@ module.exports = app => {
             return res.redirect(`/`);
         })
     });
+    //INDEX
+    app.get('/index', (req, res) => {
+        Post.find({})
+            .then(posts => {
+            res.render("post-index", { posts });
+        })
+            .catch(err => {
+            console.log(err.message);
+        });
+    })
   };
