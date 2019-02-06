@@ -15,18 +15,19 @@ app.use(expressValidator());
 require('./controllers/posts.js')(app);
 require('./data/reddit-db');
 
-app.get('/', function (req, res) {
-    res.render('posts-index');
-});
+// app.get('/', function (req, res) {
+//     res.render('posts-index');
+// });
 
-app.get('/posts/new', function (req, res) {
-    res.render('posts-new')
-})
+// app.get('/posts/new', function (req, res) {
+//     res.render('posts-new')
+// })
 
-// app.get('/index', function (req, res) {
-//     res.render('post-index')
+// // SUBREDDIT
+// app.get("/n/:subreddit", function(req, res) {
+//     console.log(req.params.subreddit);
 // })
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
-//module.exports = app;
+module.exports = app;

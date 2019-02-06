@@ -2,7 +2,7 @@ const Post = require('../models/post');
 
 module.exports = app => {
     // CREATE
-    app.post("/posts/new", (req, res) => {
+    app.post('/posts/new', (req, res) => {
       // INSTANTIATE INSTANCE OF POST MODEL
         const post = new Post(req.body);
 
@@ -12,6 +12,13 @@ module.exports = app => {
             return res.redirect(`/`);
         })
     });
+    //GO TO NEW FORM 
+    // app.get('/posts/new', (req, res) {
+    //     res.render('posts-newvs cvsvs vs vs')
+    // })
+    app.get('/posts/new', (req, res) => {
+        res.render('posts-new')
+    })
     //INDEX
     app.get('/', (req, res) => {
         Post.find({})
