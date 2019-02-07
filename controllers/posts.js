@@ -13,9 +13,6 @@ module.exports = app => {
         })
     });
     //GO TO NEW FORM 
-    // app.get('/posts/new', (req, res) {
-    //     res.render('posts-newvs cvsvs vs vs')
-    // })
     app.get('/posts/new', (req, res) => {
         res.render('posts-new')
     })
@@ -38,8 +35,18 @@ module.exports = app => {
           })
           .catch(err => {
             console.log(err.message);
-          });
-      });
+        });
+    });
+    // SUBREDDIT
+    app.get("/n/:subreddit", function(req, res) {
+        Post.find({ subreddit: req.params.subreddit })
+            .then(posts => {
+                res.render("posts-index", { posts });
+            })
+            .catch(err => {
+                console.log(err);
+        });
+    })
 
 
 
