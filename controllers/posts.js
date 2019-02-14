@@ -1,3 +1,4 @@
+const User = require('../models/user');
 const Post = require('../models/post');
 
 module.exports = app => {
@@ -5,14 +6,24 @@ module.exports = app => {
     app.post("/posts/new", (req, res) => {
         if (req.user) {
             var post = new Post(req.body);
-        
-            // SAVE INSTANCE OF POST MODEL TO DB
-            post.save(function(err, post) {
-                // REDIRECT TO THE ROOT
-                return res.redirect(`/`);
-            });
+            post.author = req.user._id;
+
+            post
+                .save()
+                .then(post => {
+                return User.findById(req.user._id);
+                })
+                .then(user => {
+                    user.posts.unshift(post);
+                    user.save();
+                    //REDIRECT TO THE NEW POST
+                    res.redirect(`/posts/${post._id}`);
+                })
+                .catch(err => {
+                    console.log(err.message);
+                });
         } else {
-            return res.status(401); // UNAUTHORIZED
+            return res.status(401); //UNAUTHORIZED 
         }
     });
     //GO TO NEW FORM 
@@ -22,7 +33,8 @@ module.exports = app => {
     //INDEX
     app.get('/', (req, res) => {
         var currentUser = req.user;
-        Post.find({})
+        console.log(req.cookies)
+        Post.find().populate('author')
             .then(posts => {
             res.render("posts-index", { posts, currentUser });
         })
@@ -32,18 +44,21 @@ module.exports = app => {
     })
     // BY ID OR WHATEVER
     app.get("/posts/:id", function(req, res) {
+        var currentUser = req.user;
         // LOOK UP THE POST
-        Post.findById(req.params.id).populate('comments').then((post) => {
-            res.render('posts-show', { post })
-          }).catch((err) => {
-            console.log(err.message)
-          })
+        Post.findById(req.params.id).populate('comments').populate('author')
+            .then((post) => {
+                res.render('posts-show', { post })
+            }).catch((err) => {
+                console.log(err.message)
+            })
     });
     // SUBREDDIT
     app.get("/n/:subreddit", function(req, res) {
-        Post.find({ subreddit: req.params.subreddit })
+        var currentUser = req.user;
+        Post.find({ subreddit: req.params.subreddit }).populate('author')
             .then(posts => {
-                res.render("posts-index", { posts });
+                res.render("posts-index", { posts, currentUser });
             })
             .catch(err => {
                 console.log(err);
