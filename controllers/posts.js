@@ -26,10 +26,13 @@ module.exports = app => {
             return res.status(401); //UNAUTHORIZED 
         }
     });
+
     //GO TO NEW FORM 
     app.get('/posts/new', (req, res) => {
-        res.render('posts-new')
-    })
+        const currentUser = req.user;
+        res.render('posts-new', { currentUser })
+    });
+
     //INDEX
     app.get('/', (req, res) => {
         var currentUser = req.user;
