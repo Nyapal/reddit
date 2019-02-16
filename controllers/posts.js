@@ -46,7 +46,7 @@ module.exports = app => {
         });
     });
 
-    // BY ID OR WHATEVER
+    // SHOW BY ID OR WHATEVER
     app.get("/posts/:id", function(req, res) {
         var currentUser = req.user;
         // LOOK UP THE POST
@@ -67,7 +67,7 @@ module.exports = app => {
             })
             .catch(err => {
                 console.log(err);
-        });
+            });
     })
 
 

@@ -35,6 +35,7 @@ var checkAuth = (req, res, next) => {
 require('./controllers/posts.js')(app);
 require('./controllers/comments.js')(app);
 require('./controllers/auth.js')(app);
+require('./controllers/replies.js')(app);
 require('./data/reddit-db');
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
